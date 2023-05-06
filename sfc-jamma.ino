@@ -23,7 +23,14 @@
 #define P1_HK         19
 
 
-int profile = 0;
+#define ibus_baud     (115200)
+#define ibus_sep      (0x40)
+#define ibus_channels (2)
+#define ibus_len      (4 + (ibus_channels * 2))
+
+int ibus_checksum     = 0;
+
+int profile           = 0;
 
 
 int P1[PROFILE_MAX][BUTTON_MAX] = {
@@ -65,6 +72,54 @@ int P1[PROFILE_MAX][BUTTON_MAX] = {
 };
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+// BEGIN AN IBUS TRANSMISSION
+////////////////////////////////////////////////////////////////////////////////
+void ibus_start() {
+  ibus_checksum = 0xffff - ibus_len - ibus_sep;
+  Serial.write(ibus_len);
+  Serial.write(ibus_sep);
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// END AN IBUS TRANSMISSION
+////////////////////////////////////////////////////////////////////////////////
+void ibus_end() {
+  Serial.write(ibus_checksum & 0xff);
+  Serial.write(ibus_checksum >> 8);
+
+//  Serial.write('\n');
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// SEND AN IBUS MESASGE
+////////////////////////////////////////////////////////////////////////////////
+void ibus_write(unsigned short data) {
+  // WRITE FIRST BYTE
+  byte b = data & 0xff;
+  Serial.write(b);
+  ibus_checksum -= b;
+
+  // WRITE SECOND BYTE
+  b = data >> 8;
+  Serial.write(b);
+  ibus_checksum -= b;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// MAIN INITIALIZATION CODE
+////////////////////////////////////////////////////////////////////////////////
 void setup() {
   
   // initialize digital pin LED_BUILTIN as an output.
@@ -73,7 +128,7 @@ void setup() {
   // SET ALL JAMMA PINS TO "INPUT" MODE
   for (int i=0; i<BUTTON_MAX; i++) {
     if (P1[profile][i] == 0xFF) continue;
-    pinMode(P1[profile][i], INPUT);
+    pinMode(P1[profile][i], INPUT_PULLUP);
   }
   
   // Set DATA_CLOCK normally HIGH
@@ -88,9 +143,18 @@ void setup() {
   pinMode(DATA_SERIAL, OUTPUT);
   digitalWrite(DATA_SERIAL, HIGH);
   pinMode(DATA_SERIAL, INPUT_PULLUP);
+  digitalWrite(DATA_SERIAL, HIGH);
+
+  // SETUP SERIAL FOR IBUS
+  Serial.begin(ibus_baud);
 }
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+// READ DATA FROM THE SFC BUS
+////////////////////////////////////////////////////////////////////////////////
 unsigned int read_button() {
   unsigned int buttons = 0;
   
@@ -107,40 +171,62 @@ unsigned int read_button() {
     delayMicroseconds(6);
   }
 
+  // CONTROLLER APPEARS UNPLUGGED
+  // PROCESS AS NO BUTTONS PRESSED INSTEAD
+  if (buttons == 0x0000) buttons = 0xFFFF;
+
   return buttons;
 }
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+// MAIN PROGRAM LOOP
+////////////////////////////////////////////////////////////////////////////////
 void loop() {
   // READ THE CURRENT BUTTON STATE
-  unsigned int buttons = read_button();
+  unsigned int buttons  = read_button();
+  unsigned int jamma    = 0;
 
 
-  // CONTROLLER APPEARS UNPLUGGED
-  // PROCESS AS NO BUTTONS PRESSED INSTEAD
-  if (buttons == 0x0000) buttons = 0xFFFF;
-  
-
-  // LIGHT UP LED IF ANY BUTTONS ARE PRESSED
+  // LIGHT UP ARDUINO LED IF ANY SFC BUTTONS ARE PRESSED
   digitalWrite(LED_BUILTIN, (buttons != 0xFFFF));
 
 
-  // SEND BUTTON DATA TO JAMMA
+  // PROCESS BUTTON DATA
   for (int i=0; i<BUTTON_MAX; i++) {
     int btn = P1[profile][i];
     if (btn == 0xFF) continue;
-    
+
+    // SFC BUTTON NOT PRESSED, READ JAMMA BUTTON INSTEAD
     if (buttons & (0x01 << i)) {
-      pinMode(btn, INPUT);
+      pinMode(btn, INPUT_PULLUP);
+      if (digitalRead(btn) == LOW) {
+        jamma |= (0x01 << i);
+      }
+
+    // SEND SFC BUTTON PRESS TO JAMMA
     } else {
       pinMode(btn, OUTPUT);
       digitalWrite(btn, LOW);
     }
   }
 
-  // DELAY REQUIRED FOR BROOK ADAPTER
+
+  // SEND SFC AND JAMMA BUTTON STATUS TO IBUS
+  ibus_start();
+  ibus_write(~buttons);
+  ibus_write(jamma);
+  ibus_end();
+
+  
+  // DELAY REQUIRED FOR BROOK ADAPTER COMPATIBILITY
   delay(8);
 }
+
+
+
 
 /*
  * red      data
