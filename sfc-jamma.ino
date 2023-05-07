@@ -1,38 +1,72 @@
-#define DATA_SERIAL   14
-#define DATA_CLOCK    15
-#define DATA_LATCH    16
-#define BUTTON_MAX    16
-
-#define PROFILE_MAX    2
-
-#define P1_COIN        3
-#define P1_START       4
-#define P1_TEST        0
-
-#define P1_UP          5
-#define P1_DOWN        6
-#define P1_LEFT        7
-#define P1_RIGHT       8
-
-#define P1_LP          9
-#define P1_MP         10
-#define P1_HP         11
-
-#define P1_LK         17
-#define P1_MK         18
-#define P1_HK         19
 
 
+////////////////////////////////////////////////////////////////////////////////
+// SFC PROFILE CONFIGURATION
+////////////////////////////////////////////////////////////////////////////////
+#define BUTTON_MAX    (16)
+#define PROFILE_MAX    (2)
+int profile           = 0;
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// SFC PIN CONFIGURATION
+////////////////////////////////////////////////////////////////////////////////
+#define DATA_SERIAL   (14)
+#define DATA_CLOCK    (15)
+#define DATA_LATCH    (16)
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// JAMMA BUTTON 
+////////////////////////////////////////////////////////////////////////////////
+#define P1_TEST        (2)
+#define P1_COIN        (3)
+#define P1_START       (4)
+#define P1_UP          (5)
+#define P1_DOWN        (6)
+#define P1_LEFT        (7)
+#define P1_RIGHT       (8)
+#define P1_LP          (9)
+#define P1_MP         (10)
+#define P1_HP         (11)
+#define P1_LK         (17)
+#define P1_MK         (18)
+#define P1_HK         (19)
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// IBUS CONFIGURATION FOR SENDING BUTTONS BACK TO
+// PC OVER SERIAL/USB INTERFACE
+////////////////////////////////////////////////////////////////////////////////
 #define ibus_baud     (115200)
 #define ibus_sep      (0x40)
 #define ibus_channels (3)
 #define ibus_len      (4 + (ibus_channels * 2))
-
 int ibus_checksum     = 0;
 
-int profile           = 0;
 
 
+
+////////////////////////////////////////////////////////////////////////////////
+// CONSTANT TIME DELAY CODE
+// BROOK SNES ADAPTERS ARE UNSTABLE AT 6MS, BUT STABLE AT 7MS
+// ADD AN EXTRA 0.5MS TO ENSURE A MARGIN OF ERROR
+////////////////////////////////////////////////////////////////////////////////
+unsigned long time;
+#define time_delay    (7500)
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// BUTTON MAPPING PROFILES
+////////////////////////////////////////////////////////////////////////////////
 int P1[PROFILE_MAX][BUTTON_MAX] = {
   {
     P1_LK,
@@ -75,6 +109,37 @@ int P1[PROFILE_MAX][BUTTON_MAX] = {
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// READ DATA FROM THE SFC SERIAL BUS
+////////////////////////////////////////////////////////////////////////////////
+unsigned int read_button() {
+  unsigned int buttons = 0x0000;
+
+  // INITIATE A LATCHING SEQUENCE
+  digitalWrite(DATA_LATCH, HIGH);
+  delayMicroseconds(12);
+  digitalWrite(DATA_LATCH, LOW);
+  delayMicroseconds(6);
+
+  // LOOP THROUGH EACH BUTTON AND READ ITS VALUE
+  for(int i=0; i<BUTTON_MAX; i++){
+    digitalWrite(DATA_CLOCK, LOW);
+    delayMicroseconds(6);
+    buttons |= (!!digitalRead(DATA_SERIAL)) << i;
+    digitalWrite(DATA_CLOCK, HIGH);
+    delayMicroseconds(6);
+  }
+
+  // CONTROLLER APPEARS UNPLUGGED
+  // PROCESS AS NO BUTTONS PRESSED INSTEAD
+  if (buttons == 0x0000) buttons = 0xFFFF;
+
+  return buttons;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
 // BEGIN AN IBUS TRANSMISSION
 ////////////////////////////////////////////////////////////////////////////////
 void ibus_start() {
@@ -92,8 +157,6 @@ void ibus_start() {
 void ibus_end() {
   Serial.write(ibus_checksum & 0xff);
   Serial.write(ibus_checksum >> 8);
-
-//  Serial.write('\n');
 }
 
 
@@ -147,35 +210,9 @@ void setup() {
 
   // SETUP SERIAL FOR IBUS
   Serial.begin(ibus_baud);
-}
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// READ DATA FROM THE SFC BUS
-////////////////////////////////////////////////////////////////////////////////
-unsigned int read_button() {
-  unsigned int buttons = 0;
-  
-  digitalWrite(DATA_LATCH, HIGH);
-  delayMicroseconds(12);
-  digitalWrite(DATA_LATCH, LOW);
-  delayMicroseconds(6);
-
-  for(int i=0; i<BUTTON_MAX; i++){
-    digitalWrite(DATA_CLOCK, LOW);
-    delayMicroseconds(6);
-    buttons |= (!!digitalRead(DATA_SERIAL)) << i;
-    digitalWrite(DATA_CLOCK, HIGH);
-    delayMicroseconds(6);
-  }
-
-  // CONTROLLER APPEARS UNPLUGGED
-  // PROCESS AS NO BUTTONS PRESSED INSTEAD
-  if (buttons == 0x0000) buttons = 0xFFFF;
-
-  return buttons;
+  // GET INITIAL TIMEFRAME
+  time = micros();
 }
 
 
@@ -243,7 +280,9 @@ void loop() {
 
   
   // DELAY REQUIRED FOR BROOK ADAPTER COMPATIBILITY
-  delay(7);
+  // USE A CONSTANT TIME DELAY REGARDLESS OF PROCESSING ABOVE
+  while ((micros() - time) < time_delay) {}
+  time += time_delay;
 }
 
 
