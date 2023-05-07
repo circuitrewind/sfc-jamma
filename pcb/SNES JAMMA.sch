@@ -1219,8 +1219,8 @@ straight</description>
 <instance part="JAMMA" gate="-13" x="55.88" y="134.62" smashed="yes" rot="R270">
 <attribute name="NAME" x="55.118" y="133.604" size="1.524" layer="95" rot="R270"/>
 </instance>
-<instance part="JAMMA" gate="-14" x="55.88" y="111.76" smashed="yes" rot="R270">
-<attribute name="NAME" x="55.118" y="110.744" size="1.524" layer="95" rot="R270"/>
+<instance part="JAMMA" gate="-14" x="60.96" y="76.2" smashed="yes">
+<attribute name="NAME" x="61.976" y="75.438" size="1.524" layer="95"/>
 </instance>
 <instance part="JAMMA" gate="-15" x="60.96" y="73.66" smashed="yes">
 <attribute name="NAME" x="61.976" y="72.898" size="1.524" layer="95"/>
@@ -1719,10 +1719,12 @@ straight</description>
 <wire x1="-12.7" y1="71.12" x2="-15.24" y2="71.12" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$3" class="0">
+<net name="TEST" class="0">
 <segment>
 <pinref part="PLAYER-1" gate="MODUL" pin="D2"/>
-<wire x1="38.1" y1="76.2" x2="40.64" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="JAMMA" gate="-14" pin="S"/>
+<wire x1="38.1" y1="76.2" x2="55.88" y2="76.2" width="0.1524" layer="91"/>
+<label x="43.18" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$4" class="0">
