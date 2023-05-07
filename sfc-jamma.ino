@@ -25,7 +25,7 @@
 
 #define ibus_baud     (115200)
 #define ibus_sep      (0x40)
-#define ibus_channels (2)
+#define ibus_channels (7)
 #define ibus_len      (4 + (ibus_channels * 2))
 
 int ibus_checksum     = 0;
@@ -186,8 +186,13 @@ unsigned int read_button() {
 ////////////////////////////////////////////////////////////////////////////////
 void loop() {
   // READ THE CURRENT BUTTON STATE
-  unsigned int buttons  = read_button();
-  unsigned int jamma    = 0;
+  unsigned int    buttons = read_button();
+  unsigned int    jamma   = 0;
+
+  unsigned short  sfc_x   = 0x8000;
+  unsigned short  sfc_y   = 0x8000;
+  unsigned short  jamma_x = 0x8000;
+  unsigned short  jamma_y = 0x8000;
 
 
   // LIGHT UP ARDUINO LED IF ANY SFC BUTTONS ARE PRESSED
@@ -210,6 +215,13 @@ void loop() {
     } else {
       pinMode(btn, OUTPUT);
       digitalWrite(btn, LOW);
+
+      switch (btn) {
+        case P1_LEFT:   sfc_x = 0x0000; break;
+        case P1_RIGHT:  sfc_x = 0xffff; break;
+        case P1_UP:     sfc_y = 0x0000; break;
+        case P1_DOWN:   sfc_y = 0xffff; break;
+      }
     }
   }
 
@@ -217,12 +229,17 @@ void loop() {
   // SEND SFC AND JAMMA BUTTON STATUS TO IBUS
   ibus_start();
   ibus_write(~buttons);
+  ibus_write(sfc_x);
+  ibus_write(sfc_y);
   ibus_write(jamma);
+  ibus_write(jamma_x);
+  ibus_write(jamma_y);
+  ibus_write(jamma | (~buttons));
   ibus_end();
 
   
   // DELAY REQUIRED FOR BROOK ADAPTER COMPATIBILITY
-  delay(8);
+  delay(7);
 }
 
 
