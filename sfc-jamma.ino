@@ -185,8 +185,12 @@ void ibus_write(unsigned short data) {
 ////////////////////////////////////////////////////////////////////////////////
 void setup() {
   
-  // initialize digital pin LED_BUILTIN as an output.
+  // initialize pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
+
+  // INITIALIZE PIN FOR TEST MODE
+  pinMode(P1_TEST, INPUT_PULLUP);
 
   // SET ALL JAMMA PINS TO "INPUT" MODE
   for (int i=0; i<BUTTON_MAX; i++) {
@@ -194,19 +198,18 @@ void setup() {
     pinMode(P1[profile][i], INPUT_PULLUP);
   }
   
-  // Set DATA_CLOCK normally HIGH
+  // SET DATA_CLOCK NORMALLY HIGH
   pinMode(DATA_CLOCK, OUTPUT);
   digitalWrite(DATA_CLOCK, HIGH);
   
-  // Set DATA_LATCH normally LOW
+  // SET DATA_LATCH NORMALLY LOW
   pinMode(DATA_LATCH, OUTPUT);
   digitalWrite(DATA_LATCH, LOW);
 
-  // Set DATA_SERIAL normally HIGH
+  // SET DATA_SERIAL NORMALLY HIGH
   pinMode(DATA_SERIAL, OUTPUT);
   digitalWrite(DATA_SERIAL, HIGH);
   pinMode(DATA_SERIAL, INPUT_PULLUP);
-  digitalWrite(DATA_SERIAL, HIGH);
 
   // SETUP SERIAL FOR IBUS
   Serial.begin(ibus_baud);
@@ -231,6 +234,13 @@ void loop() {
 
   // LIGHT UP ARDUINO LED IF ANY SFC BUTTONS ARE PRESSED
   digitalWrite(LED_BUILTIN, (buttons != 0xFFFF));
+
+
+  // SWITCH BETWEEN JAMMA BUTTON MAPPING PROFILES
+  switch (~buttons) {
+    case 0x0014:  profile = 0;  break;
+    case 0x0024:  profile = 1;  break;
+  }
 
 
   // PROCESS BUTTON DATA
