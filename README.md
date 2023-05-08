@@ -25,5 +25,7 @@ Because the wiring on the JAMMA interface and 40-pin interface are tied directly
 * Tyco Super NES Power Plug: 1286
 * Konami Hissatsu Command Controller: RU-009
 
-
+## Images
 ![SFC to JAMMA PCB](pcb/pcb.jpg?raw=true "SFC to JAMMA PCB")
+![SFC to JAMMA Board Layout](pcb/board-1.png?raw=true "SFC to JAMMA Board Layout")
+![SFC to JAMMA Schematic](pcb/schematic-1.png?raw=true "SFC to JAMMA Schematic")
