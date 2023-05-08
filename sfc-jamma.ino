@@ -5,7 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define BUTTON_MAX    (16)
 #define PROFILE_MAX    (2)
-int profile           = 0;
+int profile             = 0;
+unsigned int  held_btns = 0;
+unsigned long held_time = 0;
+bool          held_test = false;
 
 
 
@@ -67,7 +70,7 @@ unsigned long time;
 ////////////////////////////////////////////////////////////////////////////////
 // BUTTON MAPPING PROFILES
 ////////////////////////////////////////////////////////////////////////////////
-int P1[PROFILE_MAX][BUTTON_MAX] = {
+const byte P1[PROFILE_MAX][BUTTON_MAX] = {
   {
     P1_LK,
     P1_LP,
@@ -179,6 +182,21 @@ void ibus_write(unsigned short data) {
 
 
 
+void test_button() {
+  if (micros() - held_time < 2000000) return;
+
+  held_btns = 0x0000;
+  held_test = !held_test;
+
+  if (held_test) {
+    pinMode(P1_TEST, OUTPUT);
+    digitalWrite(P1_TEST, LOW);
+  } else {
+    pinMode(P1_TEST, INPUT_PULLUP);
+  }
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // MAIN INITIALIZATION CODE
@@ -236,10 +254,20 @@ void loop() {
   digitalWrite(LED_BUILTIN, (buttons != 0xFFFF));
 
 
+  // BUTTON STATE CHANGED FROM LAST POLL TIME
+  if (held_btns != buttons) {
+    held_btns = buttons;
+    held_time = micros();
+  }
+
+
   // SWITCH BETWEEN JAMMA BUTTON MAPPING PROFILES
   switch (~buttons) {
-    case 0x0014:  profile = 0;  break;
-    case 0x0024:  profile = 1;  break;
+    case 0x0014:  profile = 0;    break;
+    case 0x0024:  profile = 1;    break;
+
+    // TEST BUTTON TOGGLE
+    case 0x000C:  test_button();  break;
   }
 
 
