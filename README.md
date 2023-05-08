@@ -10,7 +10,9 @@ Because the wiring on the JAMMA interface and 40-pin interface are tied directly
 
 
 ## Button Mappings
-Hold SELECT + START for two seconds to toggle TEST / SETTINGS button. This is set as a toggle rather than a momentary press because some games like Soul Edge require the button to remain held while in the settings menu.
+On Player 1, hold SELECT + START for two seconds to toggle TEST / SETTINGS button. This is set as a toggle rather than a momentary press because some games like Soul Edge require the button to remain held while in the settings menu.
+
+On Player 2, hold SELECT + START for two seconds to toggle TILT button. P1 and P2 Arduino Nanos run on the same code, which is why this is also a held toggle function.
 
 Press SELECT + UP to select Profile 1
 Press SELECT + DOWN to select Profile 2
@@ -50,3 +52,4 @@ Press SELECT + DOWN to select Profile 2
 ![SFC to JAMMA PCB](pcb/pcb.jpg?raw=true "SFC to JAMMA PCB")
 ![SFC to JAMMA Board Layout](pcb/board-1.png?raw=true "SFC to JAMMA Board Layout")
 ![SFC to JAMMA Schematic](pcb/schematic-1.png?raw=true "SFC to JAMMA Schematic")
+

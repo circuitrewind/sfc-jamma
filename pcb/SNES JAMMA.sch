@@ -1216,11 +1216,11 @@ straight</description>
 <instance part="JAMMA" gate="-12" x="60.96" y="111.76" smashed="yes" rot="R270">
 <attribute name="NAME" x="60.198" y="110.744" size="1.524" layer="95" rot="R270"/>
 </instance>
-<instance part="JAMMA" gate="-13" x="55.88" y="134.62" smashed="yes" rot="R270">
-<attribute name="NAME" x="55.118" y="133.604" size="1.524" layer="95" rot="R270"/>
-</instance>
-<instance part="JAMMA" gate="-14" x="60.96" y="76.2" smashed="yes">
+<instance part="JAMMA" gate="-13" x="60.96" y="76.2" smashed="yes">
 <attribute name="NAME" x="61.976" y="75.438" size="1.524" layer="95"/>
+</instance>
+<instance part="JAMMA" gate="-14" x="106.68" y="76.2" smashed="yes" rot="R180">
+<attribute name="NAME" x="105.664" y="76.962" size="1.524" layer="95" rot="R180"/>
 </instance>
 <instance part="JAMMA" gate="-15" x="60.96" y="73.66" smashed="yes">
 <attribute name="NAME" x="61.976" y="72.898" size="1.524" layer="95"/>
@@ -1719,14 +1719,6 @@ straight</description>
 <wire x1="-12.7" y1="71.12" x2="-15.24" y2="71.12" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="TEST" class="0">
-<segment>
-<pinref part="PLAYER-1" gate="MODUL" pin="D2"/>
-<pinref part="JAMMA" gate="-14" pin="S"/>
-<wire x1="38.1" y1="76.2" x2="55.88" y2="76.2" width="0.1524" layer="91"/>
-<label x="43.18" y="76.2" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="N$4" class="0">
 <segment>
 <pinref part="PLAYER-1" gate="MODUL" pin="D0/RX"/>
@@ -1769,10 +1761,12 @@ straight</description>
 <wire x1="132.08" y1="43.18" x2="129.54" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$11" class="0">
+<net name="TILT" class="0">
 <segment>
 <pinref part="PLAYER-2" gate="MODUL" pin="D2"/>
-<wire x1="132.08" y1="76.2" x2="129.54" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="JAMMA" gate="-14" pin="S"/>
+<wire x1="132.08" y1="76.2" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
+<label x="114.3" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$12" class="0">
@@ -1843,6 +1837,14 @@ straight</description>
 <label x="106.68" y="106.68" size="1.778" layer="95"/>
 <pinref part="J2" gate="G$1" pin="1"/>
 <wire x1="114.3" y1="106.68" x2="114.3" y2="114.3" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="TEST" class="0">
+<segment>
+<pinref part="PLAYER-1" gate="MODUL" pin="D2"/>
+<pinref part="JAMMA" gate="-13" pin="S"/>
+<wire x1="38.1" y1="76.2" x2="55.88" y2="76.2" width="0.1524" layer="91"/>
+<label x="43.18" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
