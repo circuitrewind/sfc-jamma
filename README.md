@@ -52,7 +52,9 @@ Press SELECT + DOWN to select Profile 2
 
 ## Images
 ![SFC to JAMMA PCB](pcb/pcb.jpg?raw=true "SFC to JAMMA PCB")
+
 ![SFC to JAMMA Board Layout](pcb/board-1.png?raw=true "SFC to JAMMA Board Layout")
+
 ![SFC to JAMMA Schematic](pcb/schematic-1.png?raw=true "SFC to JAMMA Schematic")
 
 
@@ -84,7 +86,11 @@ To use this board with a PC, allowing SNES/SFC or JAMMA input as a PC gamepad, y
 * Once everything is configured click on the "Connect" button to activate the interface
 
 ![vJoy configuration screen](vjoy/vjoy-1.png?raw=true "vJoy configuration screen")
+
 ![vJoySerialFeeder configuration screen](vjoy/feeder-1.png?raw=true "vJoySerialFeeder configuration screen")
+
 ![vJoySerialFeeder IBUS configuration screen](vjoy/feeder-2.png?raw=true "vJoySerialFeeder IBUS configuration screen")
+
 ![vJoySerialFeeder bit-mapped button configuration screen](vjoy/feeder-3.png?raw=true "vJoySerialFeeder bit-mapped button configuration screen")
+
 ![vJoySerialFeeder axis configuration screen](vjoy/feeder-4.png?raw=true "vJoySerialFeeder axis configuration screen")
