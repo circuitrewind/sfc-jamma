@@ -182,6 +182,10 @@ void ibus_write(unsigned short data) {
 
 
 
+
+////////////////////////////////////////////////////////////////////////////////
+// TOGGLE TEST/SETTINGS BUTTON WHEN START+SELECT HELD FOR 2 SECONDS
+////////////////////////////////////////////////////////////////////////////////
 void test_button() {
   if (micros() - held_time < 2000000) return;
 
@@ -195,6 +199,7 @@ void test_button() {
     pinMode(P1_TEST, INPUT_PULLUP);
   }
 }
+
 
 
 
