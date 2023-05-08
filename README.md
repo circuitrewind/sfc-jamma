@@ -83,8 +83,8 @@ To use this board with a PC, allowing SNES/SFC or JAMMA input as a PC gamepad, y
 * In each axis channel, click their "Setup" button and set: Minimum=0, Center=32768, Maximum=65535
 * Once everything is configured click on the "Connect" button to activate the interface
 
-![vJoy configuration screen](vjoy/vjoy-1.jpg?raw=true "vJoy configuration screen")
-![vJoySerialFeeder configuration screen](vjoy/feeder-1.jpg?raw=true "vJoySerialFeeder configuration screen")
-![vJoySerialFeeder IBUS configuration screen](vjoy/feeder-2.jpg?raw=true "vJoySerialFeeder IBUS configuration screen")
-![vJoySerialFeeder bit-mapped button configuration screen](vjoy/feeder-3.jpg?raw=true "vJoySerialFeeder bit-mapped button configuration screen")
-![vJoySerialFeeder axis configuration screen](vjoy/feeder-4.jpg?raw=true "vJoySerialFeeder axis configuration screen")
+![vJoy configuration screen](vjoy/vjoy-1.png?raw=true "vJoy configuration screen")
+![vJoySerialFeeder configuration screen](vjoy/feeder-1.png?raw=true "vJoySerialFeeder configuration screen")
+![vJoySerialFeeder IBUS configuration screen](vjoy/feeder-2.png?raw=true "vJoySerialFeeder IBUS configuration screen")
+![vJoySerialFeeder bit-mapped button configuration screen](vjoy/feeder-3.png?raw=true "vJoySerialFeeder bit-mapped button configuration screen")
+![vJoySerialFeeder axis configuration screen](vjoy/feeder-4.png?raw=true "vJoySerialFeeder axis configuration screen")
