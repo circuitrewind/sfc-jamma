@@ -48,6 +48,8 @@ Press SELECT + DOWN to select Profile 2
 * Tyco Super NES Power Plug: 1286
 * Konami Hissatsu Command Controller: RU-009
 * High Frequency Clear Turbo Controller for SNES
+* FC2 Slim
+* Hyperkin Retron 2 Controller: M05932
 
 
 ## Images
