@@ -19,19 +19,19 @@ On Player 2, hold SELECT + START for two seconds to toggle TILT button. P1 and P
 Press SELECT + UP to select Profile 1
 Press SELECT + DOWN to select Profile 2
 
-|SNES|Profile 1|Profile 2|
-|---|---|---|
-|SELECT|Insert Coin|Insert Coin|
-|START|Player Start|Player Start|
-|A|Button 5 (MK)|Button 6 (HK)|
-|B|Button 4 (LK)|Button 4 (LK)|
-|X|Button 2 (MP)|Button 3 (HP)|
-|Y|Button 1 (LP)|Button 1 (LP)|
-|L|Button 3 (HP)|Button 2 (MP)|
-|R|Button 6 (HK)|Button 5 (MK)|
+|SNES|NES|Profile 1|Profile 2|
+|---|---|---|---|
+|SELECT|SELECT|Insert Coin|Insert Coin|
+|START|START|Player Start|Player Start|
+|A||Button 5 (MK)|Button 6 (HK)|
+|B|A|Button 4 (LK)|Button 4 (LK)|
+|X||Button 2 (MP)|Button 3 (HP)|
+|Y|B|Button 1 (LP)|Button 1 (LP)|
+|L||Button 3 (HP)|Button 2 (MP)|
+|R||Button 6 (HK)|Button 5 (MK)|
 
 
-## Tested Controllers
+## Tested SNES Controllers
 * Nintendo Super Famicom Controller: SHVC-005
 * Brook Gaming Wingman SNES Converter: ZPP005Q
 * 8BitDo Retro Receiver for SNES
@@ -50,6 +50,13 @@ Press SELECT + DOWN to select Profile 2
 * High Frequency Clear Turbo Controller for SNES
 * FC2 Slim
 * Hyperkin Retron 2 Controller: M05932
+
+
+## Tested NES Controllers
+* Nintendo Controller: NES-004
+* Nintendo NES MAX: NES-027
+* 8BitDo N30 2.4g Wireless Gamepad: 81BC
+* Brook Gaming Wingman SNES Converter: ZPP005Q
 
 
 ## Images
