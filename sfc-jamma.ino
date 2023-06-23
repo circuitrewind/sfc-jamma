@@ -136,6 +136,12 @@ unsigned int read_button() {
   // PROCESS AS NO BUTTONS PRESSED INSTEAD
   if (buttons == 0x0000) buttons = 0xFFFF;
 
+  // NES CONTROLLER SUPPORT
+  // UNSET HIGH BITS IF WE DETECT 8-BIT NES CONTROLLERS
+  if ((buttons & 0xFF00) == 0x0000) {
+    buttons |= 0xFF00;
+  }
+
   return buttons;
 }
 
@@ -327,15 +333,3 @@ void loop() {
   while ((micros() - time) < time_delay) {}
   time += time_delay;
 }
-
-
-
-
-/*
- * red      data
- * yellow   clock
- * green    5v
- * black    ground
- * white    latch
- * 
- */
