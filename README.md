@@ -4,7 +4,7 @@ TLDR: SNES/SFC controller support on arcade machines!
 
 [Click here for a demo video of a Capcom CP Solder used to play Street Fighter Zero 3](https://www.tiktok.com/@vincerants/video/7230315835842170155)
 
-This repository contains the Eagle CAD files as well as the Arduino Nano source to to interface a Super Famicom (SFC) or Super Nintendo (SNES) controller with an Arcade Cabinet JAMMA interface via a 40-pin ribbon cable.
+This repository contains the Eagle CAD files as well as the Arduino Nano source code to interface a Super Famicom (SFC) or Super Nintendo (SNES) controller with an Arcade Cabinet JAMMA interface via a 40-pin ribbon cable.
 
 The 40-pin ribbon cable pinout is based on the pinout used by the [EZ Switchers by RiddledTV](https://riddledtv.com/arcade/ez.html). The EZ 4-way Switcher and EZ 8-way Switcher provide both a JAMMA edge and 40-pin output connectors with the intent of having two cabinets wired into the same arcade board for head-to-head gameplay. I abused this fact to instead use the 40-pin cable for a secondary set of user input controls.
 
