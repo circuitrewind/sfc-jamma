@@ -33,6 +33,7 @@ Press SELECT + DOWN to select Profile 2
 
 ## Tested SNES Controllers
 * Nintendo Super Famicom Controller: SHVC-005
+* Nintendo Super NES Score Master: SNSP-026
 * Brook Gaming Wingman SNES Converter: ZPP005Q
 * 8BitDo Retro Receiver for SNES
 * Capcom CP Soldier: CP-S01CAN
