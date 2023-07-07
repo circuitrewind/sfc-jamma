@@ -32,6 +32,7 @@ Press SELECT + DOWN to select Profile 2
 
 
 ## Tested SNES Controllers
+* Nintendo Super NES Controller: SNS-005
 * Nintendo Super Famicom Controller: SHVC-005
 * Nintendo Super NES Score Master: SNSP-026
 * Brook Gaming Wingman SNES Converter: ZPP005Q
