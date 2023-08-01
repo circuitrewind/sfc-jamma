@@ -35,6 +35,7 @@ Press SELECT + DOWN to select Profile 2
 * Nintendo Super NES Controller: SNS-005
 * Nintendo Super Famicom Controller: SHVC-005
 * Nintendo Super NES Score Master: SNSP-026
+* NTT Data Key Pad: NDK10 (1)
 * Brook Gaming Wingman SNES Converter: ZPP005Q
 * 8BitDo Retro Receiver for SNES
 * Capcom CP Soldier: CP-S01CAN
@@ -52,6 +53,8 @@ Press SELECT + DOWN to select Profile 2
 * High Frequency Clear Turbo Controller for SNES
 * FC2 Slim
 * Hyperkin Retron 2 Controller: M05932
+
+(1) The NTT Data Key Pad will always have bit 14 pressed (outside of the normal buttons). The four high bits are used to identify the type of device plugged into a controller port, with value 0h being a normal controller. This has a value of 2h, and it most likely used by the accompanying hardware to identify itself and tell the software to do extra querying on the controller to read its additional buttons.
 
 
 ## Tested NES Controllers
