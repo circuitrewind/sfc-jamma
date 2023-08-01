@@ -121,15 +121,14 @@ unsigned int read_button() {
   digitalWrite(DATA_LATCH, HIGH);
   delayMicroseconds(12);
   digitalWrite(DATA_LATCH, LOW);
-  delayMicroseconds(6);
 
   // LOOP THROUGH EACH BUTTON AND READ ITS VALUE
   for(int i=0; i<BUTTON_MAX; i++){
+    delayMicroseconds(6);
     digitalWrite(DATA_CLOCK, LOW);
     delayMicroseconds(6);
     buttons |= (!!digitalRead(DATA_SERIAL)) << i;
     digitalWrite(DATA_CLOCK, HIGH);
-    delayMicroseconds(6);
   }
 
   // CONTROLLER APPEARS UNPLUGGED
